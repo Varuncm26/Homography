@@ -14,11 +14,12 @@ int main(int argc, char** argv)
     // INITIALIZE CAMERA 
    // GStreamer pipeline 
 string pipeline =
-    "libcamerasrc ! "
-    "video/x-raw,width=2328,height=1748,framerate=30/1 ! "
-    "videoconvert ! "
-    "video/x-raw, format=BGR ! appsink drop=true";
-
+  "libcamerasrc ! "
+	"video/x-raw,width=2328,height=1748,format=BGRx !"
+	"videoconvert !"
+	"video/x-raw,format=BGR !"
+	"queue ! appsink drop =true";
+    
 VideoCapture cap(pipeline, cv::CAP_GSTREAMER);
     
     if (!cap.isOpened()) {
