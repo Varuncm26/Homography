@@ -21,6 +21,3 @@ $(TARGET): $(SRC)
 # Clean rule to remove the executable
 clean:
 	rm -f $(TARGET)
-
-
-

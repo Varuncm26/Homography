@@ -44,9 +44,6 @@ VideoCapture cap(pipeline, cv::CAP_GSTREAMER);
             break;
         }
 
-        // Add on-screen instructions
-        string msg = (captureCount == 0) ? "Press 'c' for First Image" : "Press 'c' for Second Image";
-        putText(frame, msg, Point(20, 40), FONT_HERSHEY_SIMPLEX, 0.8, Scalar(0, 255, 0), 2);
         
         imshow("ArduCam Feed", frame);
 
@@ -144,6 +141,7 @@ for (size_t i = 0; i < goodMatches.size(); i++) {
     if (!H.empty()) {
     warpPerspective(queryImg, warped, H, trainImg.size());
 
+imwrite("warp_result.jpg", warped);
     imshow("Warped Query Image", warped);
 }
 
@@ -164,4 +162,5 @@ for (size_t i = 0; i < goodMatches.size(); i++) {
     waitKey(0);
 
     return 0;
+
 }
