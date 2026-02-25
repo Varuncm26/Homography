@@ -24,5 +24,3 @@ clean:
 
 
 
-
-libcamera-hello --list-cameras
