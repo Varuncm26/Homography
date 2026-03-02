@@ -2,7 +2,7 @@
 TARGET = feature_matcher
 
 # Your source file
-SRC = main.cpp
+SRC = Homography.cpp
 
 # Compiler
 CXX = g++
@@ -21,4 +21,5 @@ $(TARGET): $(SRC)
 
 # Clean up
 clean:
+
 	rm -f $(TARGET)
