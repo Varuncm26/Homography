@@ -181,6 +181,7 @@ int main()
     // waitKey(0);
 
     //  DISPLAY AND STORE RESULTS 
+    Mat img_matches;
     drawMatches(queryImg, queryKeypoints, trainImg, trainKeypoints, goodMatches, img_matches);
 
     // Save the result
@@ -196,3 +197,20 @@ int main()
 
     return 0;
 }
+
+
+
+
+
+
+
+
+
+./feature_matcher
+Camera Matrix loaded.
+Found 400 query keypoints and 400 train keypoints.
+Found 212 good matches.
+terminate called after throwing an instance of 'cv::Exception'
+  what():  OpenCV(4.11.0) /home/pi/opencv/modules/core/src/matrix.cpp:1171: error: (-13:Image step is wrong) The matrix is not continuous, thus its number of rows can not be changed in function 'reshape'
+
+Aborted
