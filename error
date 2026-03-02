@@ -1,0 +1,9 @@
+pi@raspberrypi:~/VARUN $ ./capture_tool
+--- Camera Started ---
+Press 'c' to capture an image.
+1st Capture = Query Image (Object)
+2nd Capture = Train Image (Scene)
+Press 'q' to quit.
+Error: Blank frame grabbed
+[ERROR:0@0.023] global window_gtk.cpp:1333 cvDestroyWindow OpenCV/GTK: Can't destroy non-registered window: 'ArduCam Feed'
+
