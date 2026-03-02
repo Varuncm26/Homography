@@ -8,23 +8,45 @@ using namespace cv;
 
 int main()
 {
-    
-    // INITIALIZE CAMERA 
-VideoCapture cap(0, cv::CAP_V4L2); 
 
-if (!cap.isOpened()) {
-    cerr << "Error: Could not open camera. Check connection." << endl;
-    return -1;
-}
+      // INITIALIZE CAMERA  
+   // GStreamer pipeline 
+string pipeline =
+    "libcamerasrc ! "
+    "video/x-raw,width=2328,height=1748,framerate=30/1 ! "
+    "videoconvert ! "
+    "video/x-raw, format=BGR ! appsink drop=true";
 
-// Set width and height same as used in calibration
-cap.set(CAP_PROP_FRAME_WIDTH, 2328);
-cap.set(CAP_PROP_FRAME_HEIGHT, 1748);
-    // Set Video format MJPG (Motion JPEG) 
-cap.set(cv::CAP_PROP_FOURCC, cv::VideoWriter::fourcc('M','J','P','G'));
+VideoCapture cap(pipeline, cv::CAP_GSTREAMER);
     
-    // Set frames per second (FPS) 
-    cap.set(cv::CAP_PROP_FPS, 30);
+    if (!cap.isOpened()) {
+        cerr << "Error: Could not open camera. Check connection or index." << endl;
+        return -1;
+    }
+
+    
+//     // INITIALIZE CAMERA 
+// VideoCapture cap(0, cv::CAP_V4L2); 
+//      video.open(cameraId); //for kurokesu or usb cams
+    
+//     bool success_width=video.set(cv::CAP_PROP_FRAME_WIDTH,1920);
+//     bool success_height=video.set(cv::CAP_PROP_FRAME_HEIGHT,1080);
+//     video.set(cv::CAP_PROP_FOURCC,cv::VideoWriter::fourcc('M','J','P','G'));
+//     video.set(cv::CAP_PROP_FPS,30);
+
+// if (!cap.isOpened()) {
+//     cerr << "Error: Could not open camera. Check connection." << endl;
+//     return -1;
+// }
+
+// // Set width and height same as used in calibration
+// cap.set(CAP_PROP_FRAME_WIDTH, 2328);
+// cap.set(CAP_PROP_FRAME_HEIGHT, 1748);
+//     // Set Video format MJPG (Motion JPEG) 
+// cap.set(cv::CAP_PROP_FOURCC, cv::VideoWriter::fourcc('M','J','P','G'));
+    
+//     // Set frames per second (FPS) 
+//     cap.set(cv::CAP_PROP_FPS, 30);
 
 
     Mat frame;
