@@ -1,9 +1,11 @@
-./feature_matcher
-Camera Matrix loaded.
-Found 400 query keypoints and 400 train keypoints.
-Found 212 good matches.
-RANSAC Result: 165 Inliers, 47 Outliers.
-terminate called after throwing an instance of 'cv::Exception'
-  what():  OpenCV(4.11.0) /home/pi/opencv/modules/core/src/matrix.cpp:1171: error: (-13:Image step is wrong) The matrix is not continuous, thus its number of rows can not be changed in function 'reshape'
+// Create the initial match image
+drawMatches(queryImg, queryKeypoints, trainImg, trainKeypoints, outliers, img_matches,
+            Scalar(0, 0, 255), Scalar::all(-1), vector<char>(), DrawMatchesFlags::NOT_DRAW_SINGLE_POINTS);
 
-Aborted
+// FORCE CONTINUITY: This is the magic line
+img_matches = img_matches.clone(); 
+
+// Now draw the inliers over it
+drawMatches(queryImg, queryKeypoints, trainImg, trainKeypoints, inliers, img_matches,
+            Scalar(0, 255, 0), Scalar::all(-1), vector<char>(), 
+            DrawMatchesFlags::DRAW_OVER_OUTIMG | DrawMatchesFlags::NOT_DRAW_SINGLE_POINTS);
