@@ -9,7 +9,7 @@ PROCESS_BIN = feature_matcher
 
 # Source Files
 CAPTURE_SRC = capture.cpp
-PROCESS_SRC = main.cpp
+PROCESS_SRC = Homography.cpp
 
 # Default: Build both programs
 all: $(CAPTURE_BIN) $(PROCESS_BIN)
@@ -27,3 +27,4 @@ clean:
 	rm -f $(CAPTURE_BIN) $(PROCESS_BIN) capture_1.jpg capture_2.jpg ransac_result.jpg featuremap_result.jpg
 
 .PHONY: all clean
+
