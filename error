@@ -109,20 +109,20 @@ int main()
     } else {
         cerr << "Warning: Not enough matches to calculate homography." << endl;
     }
-    // SEPARATE MATCHES
-    vector<DMatch> inliers;
-    vector<DMatch> outliers;
+    // // SEPARATE MATCHES
+    // vector<DMatch> inliers;
+    // vector<DMatch> outliers;
 
-    for (size_t i = 0; i < goodMatches.size(); i++) {
-        if (ransacMask.at<uchar>(i) != 0) {
-            inliers.push_back(goodMatches[i]);  //Match 
-        }
-        else {
-            outliers.push_back(goodMatches[i]); // Error
-        }
-    }
+    // for (size_t i = 0; i < goodMatches.size(); i++) {
+    //     if (ransacMask.at<uchar>(i) != 0) {
+    //         inliers.push_back(goodMatches[i]);  //Match 
+    //     }
+    //     else {
+    //         outliers.push_back(goodMatches[i]); // Error
+    //     }
+    // }
 
-    cout << "RANSAC Result: " << inliers.size() << " Inliers, " << outliers.size() << " Outliers." << endl;
+    // cout << "RANSAC Result: " << inliers.size() << " Inliers, " << outliers.size() << " Outliers." << endl;
 
     
    
@@ -152,33 +152,33 @@ int main()
         }
         
     }
-    // inlier and outlier visualization
-    Mat in_matches;
-    Mat out_matches;
+    // // inlier and outlier visualization
+    // Mat in_matches;
+    // Mat out_matches;
 
-    drawMatches(queryImg, queryKeypoints, trainImg, trainKeypoints, outliers, out_matches,
-                Scalar(0, 0, 255), Scalar::all(-1), vector<char>(), DrawMatchesFlags::NOT_DRAW_SINGLE_POINTS);
+    // drawMatches(queryImg, queryKeypoints, trainImg, trainKeypoints, outliers, out_matches,
+    //             Scalar(0, 0, 255), Scalar::all(-1), vector<char>(), DrawMatchesFlags::NOT_DRAW_SINGLE_POINTS);
 
-    drawMatches(queryImg, queryKeypoints, trainImg, trainKeypoints, inliers, in_matches,
-                Scalar(0, 255, 0), Scalar::all(-1), vector<char>(), 
-                DrawMatchesFlags::DRAW_OVER_OUTIMG | DrawMatchesFlags::NOT_DRAW_SINGLE_POINTS);
+    // drawMatches(queryImg, queryKeypoints, trainImg, trainKeypoints, inliers, in_matches,
+    //             Scalar(0, 255, 0), Scalar::all(-1), vector<char>(), 
+    //             DrawMatchesFlags::DRAW_OVER_OUTIMG | DrawMatchesFlags::NOT_DRAW_SINGLE_POINTS);
 
-    // Save the result
-    imwrite("ransac_result.jpg", in_matches);
-    cout << "Result saved as ransac_result.jpg (Green=Inliers, Red=Outliers)" << endl;
+    // // Save the result
+    // imwrite("ransac_result.jpg", in_matches);
+    // cout << "Result saved as ransac_result.jpg (Green=Inliers, Red=Outliers)" << endl;
 
-    imwrite("ransac_result.jpg", out_matches);
-    cout << "Result saved as ransac_result.jpg (Green=Inliers, Red=Outliers)" << endl;
+    // imwrite("ransac_result.jpg", out_matches);
+    // cout << "Result saved as ransac_result.jpg (Green=Inliers, Red=Outliers)" << endl;
 
-    // Show the result
-    namedWindow("RANSAC Inliers/Outliers", WINDOW_AUTOSIZE);
-    imshow("RANSAC Inliers/Outliers", out_matches);
-    waitKey(0);
+    // // Show the result
+    // namedWindow("RANSAC Inliers/Outliers", WINDOW_AUTOSIZE);
+    // imshow("RANSAC Inliers/Outliers", out_matches);
+    // waitKey(0);
 
-     // Show the result
-    namedWindow("RANSAC Inliers/Outliers", WINDOW_AUTOSIZE);
-    imshow("RANSAC Inliers/Outliers", in_matches);
-    waitKey(0);
+    //  // Show the result
+    // namedWindow("RANSAC Inliers/Outliers", WINDOW_AUTOSIZE);
+    // imshow("RANSAC Inliers/Outliers", in_matches);
+    // waitKey(0);
 
     //  DISPLAY AND STORE RESULTS 
     drawMatches(queryImg, queryKeypoints, trainImg, trainKeypoints, goodMatches, img_matches);
