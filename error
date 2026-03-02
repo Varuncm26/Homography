@@ -1,9 +1,48 @@
-pi@raspberrypi:~/VARUN $ ./capture_tool
---- Camera Started ---
-Press 'c' to capture an image.
-1st Capture = Query Image (Object)
-2nd Capture = Train Image (Scene)
-Press 'q' to quit.
-Error: Blank frame grabbed
-[ERROR:0@0.023] global window_gtk.cpp:1333 cvDestroyWindow OpenCV/GTK: Can't destroy non-registered window: 'ArduCam Feed'
-
+pi@raspberrypi:~/VARUN $ libcamerify ./capture_tool
+[0:34:10.109093796] [2621]  INFO Camera camera_manager.cpp:330 libcamera v0.5.2+125-69c6546d-dirty (2025-09-12T07:28:55BST)
+[0:34:10.119729936] [2624]  INFO RPI pisp.cpp:720 libpisp version v1.2.1 981977ff21f3 29-04-2025 (14:13:50)
+[0:34:10.130467484] [2624]  INFO IPAProxy ipa_proxy.cpp:180 Using tuning file /usr/share/libcamera/ipa/rpi/pisp/imx519.json
+[0:34:10.135055009] [2624]  WARN RPiAf af.cpp:77 Missing parameter "min"
+[0:34:10.135125972] [2624]  WARN RPiAf af.cpp:77 Missing parameter "max"
+[0:34:10.135134768] [2624]  WARN RPiAf af.cpp:77 Missing parameter "default"
+[0:34:10.135139990] [2624]  WARN RPiAf af.cpp:139 No speeds defined
+[0:34:10.135144305] [2624]  WARN RPiAf af.cpp:77 Missing parameter "conf_epsilon"
+[0:34:10.135148379] [2624]  WARN RPiAf af.cpp:77 Missing parameter "conf_thresh"
+[0:34:10.135152453] [2624]  WARN RPiAf af.cpp:77 Missing parameter "conf_clip"
+[0:34:10.135156638] [2624]  WARN RPiAf af.cpp:77 Missing parameter "skip_frames"
+[0:34:10.135161138] [2624]  WARN RPiAf af.cpp:77 Missing parameter "check_for_ir"
+[0:34:10.136498672] [2624]  INFO Camera camera_manager.cpp:220 Adding camera '/base/axi/pcie@1000120000/rp1/i2c@88000/imx519@1a' for pipeline handler rpi/pisp
+[0:34:10.136557820] [2624]  INFO RPI pisp.cpp:1180 Registered camera /base/axi/pcie@1000120000/rp1/i2c@88000/imx519@1a to CFE device /dev/media0 and ISP device /dev/media1 using PiSP variant BCM2712_C0
+[0:34:10.137370188] [2621]  INFO Camera camera.cpp:1215 configuring streams: (0) 640x480-RGB888/sRGB
+[0:34:10.137563355] [2624]  INFO RPI pisp.cpp:1484 Sensor: /base/axi/pcie@1000120000/rp1/i2c@88000/imx519@1a - Selected sensor format: 1280x720-SRGGB10_1X10/RAW - Selected CFE format: 1280x720-PC1R/RAW
+[0:34:10.138036779] [2621]  INFO Camera camera.cpp:1215 configuring streams: (0) 640x480-RGB888/sRGB
+[0:34:10.138163279] [2624]  INFO RPI pisp.cpp:1484 Sensor: /base/axi/pcie@1000120000/rp1/i2c@88000/imx519@1a - Selected sensor format: 1280x720-SRGGB10_1X10/RAW - Selected CFE format: 1280x720-PC1R/RAW
+[0:34:10.141202790] [2621]  INFO Camera camera.cpp:1215 configuring streams: (0) 2328x1748-RGB888/sRGB
+[0:34:10.141601085] [2624]  INFO RPI pisp.cpp:1484 Sensor: /base/axi/pcie@1000120000/rp1/i2c@88000/imx519@1a - Selected sensor format: 2328x1748-SRGGB10_1X10/RAW - Selected CFE format: 2328x1748-PC1R/RAW
+[0:34:10.142086695] [2621]  INFO Camera camera.cpp:1215 configuring streams: (0) 2328x1748-RGB888/sRGB
+[0:34:10.142206658] [2624]  INFO RPI pisp.cpp:1484 Sensor: /base/axi/pcie@1000120000/rp1/i2c@88000/imx519@1a - Selected sensor format: 2328x1748-SRGGB10_1X10/RAW - Selected CFE format: 2328x1748-PC1R/RAW
+[0:34:10.159047079] [2621]  WARN V4L2 v4l2_pixelformat.cpp:346 Unsupported V4L2 pixel format <INVALID>
+[0:34:10.159077190] [2621]  WARN Formats formats.cpp:1006 Unsupported pixel format 0x00000000
+[0:34:10.159074356] [2621] ERROR RPI pisp.cpp:228 Pixel format <INVALID> unsupported
+[0:34:10.159099301] [2621] FATAL default pisp.cpp:229 assertion "0" failed in toPiSPImageFormat()
+Backtrace:
+??? [0x00007fff34f596cc] (/usr/lib/aarch64-linux-gnu/libcamera.so.0.5.2 [0x00007fff34f596cc])
+??? [0x00007fff34f599a8] (/usr/lib/aarch64-linux-gnu/libcamera.so.0.5.2 [0x00007fff34f599a8])
+libcamera::PiSPCameraData::platformValidate(libcamera::RPi::RPiCameraConfiguration*) const+0x3dc (/usr/lib/aarch64-linux-gnu/libcamera.so.0.5.2 [0x00007fff34f59fcc])
+libcamera::RPi::RPiCameraConfiguration::validate()+0x37c (/usr/lib/aarch64-linux-gnu/libcamera.so.0.5.2 [0x00007fff34f450fc])
+??? [0x00007fff359b65f8] (/usr/libexec/aarch64-linux-gnu/libcamera/v4l2-compat.so [0x00007fff359b65f8])
+??? [0x00007fff359ba010] (/usr/libexec/aarch64-linux-gnu/libcamera/v4l2-compat.so [0x00007fff359ba010])
+??? [0x00007fff359ba41c] (/usr/libexec/aarch64-linux-gnu/libcamera/v4l2-compat.so [0x00007fff359ba41c])
+??? [0x00007fff359bcd04] (/usr/libexec/aarch64-linux-gnu/libcamera/v4l2-compat.so [0x00007fff359bcd04])
+??? [0x00007fff359bee40] (/usr/libexec/aarch64-linux-gnu/libcamera/v4l2-compat.so [0x00007fff359bee40])
+ioctl+0x68 (/usr/libexec/aarch64-linux-gnu/libcamera/v4l2-compat.so [0x00007fff359be75c])
+cv::CvCaptureCAM_V4L::tryIoctl(unsigned long, void*, bool, int) const [clone .constprop.0]+0x638 (/usr/local/lib/libopencv_videoio.so.4.11.0 [0x00007fff358d0458])
+cv::CvCaptureCAM_V4L::autosetup_capture_mode_v4l2()+0x15c (/usr/local/lib/libopencv_videoio.so.4.11.0 [0x00007fff358d7a3c])
+cv::CvCaptureCAM_V4L::initCapture()+0x604 (/usr/local/lib/libopencv_videoio.so.4.11.0 [0x00007fff358d8644])
+cv::CvCaptureCAM_V4L::setProperty(int, double)+0x78 (/usr/local/lib/libopencv_videoio.so.4.11.0 [0x00007fff358d9dc8])
+cv::VideoCapture::set(int, double)+0x34 (/usr/local/lib/libopencv_videoio.so.4.11.0 [0x00007fff35890014])
+main+0x9c (/home/pi/VARUN/capture_tool [0x000055564adb149c])
+__libc_start_call_main+0x70 (../sysdeps/nptl/libc_start_call_main.h:74)
+__libc_start_main@@GLIBC_2.34+0x98 (../csu/libc-start.c:128)
+_start+0x30 (/home/pi/VARUN/capture_tool [0x000055564adb19b0])
+Aborted
