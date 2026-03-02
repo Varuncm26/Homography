@@ -21,6 +21,28 @@ int main()
         return -1;
     }
 
+     // LOAD CAMERA MATRIX
+        FileStorage fs("calib.yml", FileStorage::READ);
+        if (!fs.isOpened()) {
+            cerr << "Error: Could not open calib.yml" << endl;
+            return -1;
+        }
+
+        Mat cameraMatrix, distCoeffs;
+        fs["camera_matrix"] >> cameraMatrix;
+        fs["dist_coeffs"] >> distCoeffs;
+        fs.release();
+
+        cout << "Camera Matrix loaded." << endl;
+    Mat queryUndistorted, trainUndistorted;
+
+// // Undistort the images
+// undistort(queryImg, queryUndistorted, cameraMatrix, distCoeffs);
+// undistort(trainImg, trainUndistorted, cameraMatrix, distCoeffs);
+
+// queryImg = queryUndistorted;
+// trainImg = trainUndistorted;
+
     // Grayscale conversion
     Mat queryGray, trainGray;
     cvtColor(queryImg, queryGray, COLOR_BGR2GRAY);
@@ -67,7 +89,7 @@ int main()
     }
     printf("Found %d good matches.\n", (int)goodMatches.size());
 
-    // HOMOGRAPHY & WARPING
+    // HOMOGRAPHY 
 
     // Extract match points
     vector<Point2f> pts_src;
@@ -80,6 +102,7 @@ int main()
 
     // Calculate homography
     Mat H;
+    Mat ransacMask;
     if (pts_src.size() >= 4) {
         H = findHomography(pts_src, pts_dst, RANSAC, 3, ransacMask);
         
@@ -90,29 +113,12 @@ int main()
     vector<DMatch> inliers;
     vector<DMatch> outliers;
 
-    // 1. Run RANSAC (Generates the mask)
-    Mat H = findHomography(pts_src, pts_dst, RANSAC, 3, ransacMask);
-
-    // 2. Separate using the mask
-    vector<DMatch> inliers;
-    vector<DMatch> outliers;
-
     for (size_t i = 0; i < goodMatches.size(); i++) {
-        // Check the mask at the same index
-        if (ransacMask[i] != 0) {
-            inliers.push_back(goodMatches[i]);  // Geometric Match (Green)
+        if (ransacMask.at<uchar>(i) != 0) {
+            inliers.push_back(goodMatches[i]);  //Match 
         }
         else {
-            outliers.push_back(goodMatches[i]); // Geometric Error (Red)
-        }
-    }
-
-    // The mask aligns perfectly with goodMatches because pts_src was built from goodMatches
-    for (size_t i = 0; i < ransacMask.size(); i++) {
-        if (ransacMask[i]) {
-            inliers.push_back(goodMatches[i]);
-        } else {
-            outliers.push_back(goodMatches[i]);
+            outliers.push_back(goodMatches[i]); // Error
         }
     }
 
@@ -121,20 +127,7 @@ int main()
     
    
     if (!H.empty()) {
-        // LOAD CAMERA MATRIX
-        FileStorage fs("calib.yml", FileStorage::READ);
-        if (!fs.isOpened()) {
-            cerr << "Error: Could not open camera_params.yml" << endl;
-            return -1;
-        }
-
-        Mat cameraMatrix, distCoeffs;
-        fs["camera_matrix"] >> cameraMatrix;
-        fs["dist_coeffs"] >> distCoeffs;
-        fs.release();
-
-        cout << "Camera Matrix loaded." << endl;
-
+       
         //  DECOMPOSE HOMOGRAPHY 
         vector<Mat> Rs, Ts, Ns;
         
@@ -180,7 +173,6 @@ int main()
 
 
     //  DISPLAY AND STORE RESULTS 
-    Mat img_matches;
     drawMatches(queryImg, queryKeypoints, trainImg, trainKeypoints, goodMatches, img_matches);
 
     // Save the result
